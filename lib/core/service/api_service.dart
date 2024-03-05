@@ -27,7 +27,7 @@ class ApiService extends GetxService {
           'Authorization': 'Bearer ${RegistrationController.currentUser.rememberToken}',
         });
       }
-      var response = await http.post(Uri.http(AppApiRoute.server, url), body: body, headers: headers);
+      var response = await http.post(Uri.https(AppApiRoute.server, url), body: body, headers: headers);
       if (response.statusCode == StatusCodeRequest.ok || response.statusCode == StatusCodeRequest.badRequest) {
         return Right(jsonDecode(response.body));
       }
@@ -53,7 +53,7 @@ class ApiService extends GetxService {
         'Authorization': 'Bearer ${RegistrationController.currentUser.rememberToken}',
       });
       }
-      var response = await http.get(Uri.http(AppApiRoute.server, url), headers: headers);
+      var response = await http.get(Uri.https(AppApiRoute.server, url), headers: headers);
       if (response.statusCode == StatusCodeRequest.ok || response.statusCode == StatusCodeRequest.badRequest) {
         return Right(jsonDecode(response.body));
       } else if (response.statusCode == StatusCodeRequest.unauthorised) {
@@ -79,7 +79,7 @@ class ApiService extends GetxService {
         'Authorization': 'Bearer ${RegistrationController.currentUser.rememberToken}',
         'Content-Type': 'multipart/form-data'
       });
-      http.MultipartRequest request = http.MultipartRequest("POST", Uri.http(AppApiRoute.server, url));
+      http.MultipartRequest request = http.MultipartRequest("POST", Uri.https(AppApiRoute.server, url));
       request.fields.addAll(body);
       request.files.add(await http.MultipartFile.fromPath('photo', file.path, filename: file.path.split('/').last,),);
       request.headers.addAll(headers);
